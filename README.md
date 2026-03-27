@@ -1,181 +1,217 @@
-# OOSDCW2
-Object Oriented Software Development Coursework 2
-In this coursework we’re going to attempt to use object orientation to create an object oriented model of the bus network in Edinburgh.
+# BusNet – Bus Network Management System (OOSD Coursework 2)
 
-Task 1   DESIGN
-The bus network comprises a number of services (e.g. service 16 to Torphin). Each service has an operator (e.g. Lothian Buses) a service ID (e.g. “1”) and a destination (e.g. “South Leith”). Each service calls at a number of bus stops (each bus stop can be associated with many services).
+![Language](https://img.shields.io/badge/Language-C%23-blue)
+![Framework](https://img.shields.io/badge/Framework-WPF-.NET-purple)
+![Architecture](https://img.shields.io/badge/Architecture-OOP-green)
+![Design Pattern](https://img.shields.io/badge/Pattern-Factory-orange)
+![Status](https://img.shields.io/badge/Status-Completed-success)
+![License](https://img.shields.io/badge/License-Educational-lightgrey)
 
-Design a class diagram to show your BusStop class and another class Service which manages the collection of BusStop objects which comprise all of stops on that service.  Include  a BusNetwork object that manages the set of Service objects and the entire set of BusStop objects. Your diagram should show the relationships between BusStop, Service and BusNetwork. 
+---
 
-You may incorporate elements of your BusStop class created for coursework 1. The BusStop class should have the properties Name (String), ID (String), Latitude and Longitude. You may wish to modify your BusStop to have the latitude and longitude properties held in a separate class called Location and then suggest an appropriate means of relating the BusStop and Location classes.
+## Overview
 
-Your Service class should have an addStop() method than may be used to add a new BusStop object to a Service. Your BusNetwork class should have addStop() and addRoute() methods.
+**BusNet** is a C# WPF application developed for **Object-Oriented Software Development (OOSD) Coursework 2**.
+The system models a real-world bus network, allowing users to load, manage, and query bus stops and services using structured object-oriented design.
 
-All your classes should have a ToString() method.
+The application demonstrates key software engineering principles including modular design, separation of concerns, and the use of design patterns.
 
- 
+---
 
-Marking Scheme
-Item
+## Objectives
 
-Mark
+* Design a scalable object-oriented system
+* Model real-world entities (bus stops, services, locations)
+* Implement data-driven functionality using CSV input
+* Apply design patterns (Factory Pattern)
+* Build an interactive graphical user interface (WPF)
 
-Classes drawn correctly on diagram
+---
 
-    /5
+## System Architecture
 
-Properties and methods shown correctly (public/private, data types etc)
+The application is composed of several core components:
 
-    /5
+### Core Classes
 
-Relationships shown correctly on diagram
+* **BusStop**
 
-(2 marks available for the handling of latitude and longitude)
+  * Represents an individual bus stop
+  * Stores ID, name, and geographic location
 
-    /5
+* **Location**
 
-(Marks: 1=Attempt made,2=Major Errors,3=Competent Answer, with errors, 4= Competent Answer, with minor errors, 5=No errors noted)
- 
- 
-Task 2 (Basic)
-Create a Visual Studio c# solution that contains a WPF project called BusNet, create folders for the object and data layers. 
+  * Encapsulates latitude and longitude
 
-Implement your BusNetwork, Service and BusStop classes in c# and place them in the object folder.
+* **Service**
 
-Add a button to your window with the caption ‘Test’ and  a textArea with the name txtOutput. The button should create an instance of BusNetwork, add two instances of Service to it and then add 5 BusStop objects to each of the BusServuce objects. The output from BusNetwork.toString() should then be displayed in txtOutput. Hint: you should see 10 stops, grouped into two services.
+  * Represents a bus service (route)
+  * Maintains a list of associated bus stops
 
-Update your class diagram to show the 3 layer architecture (hint: the data layer will be empty), for the presentation layer you can just show your window class.
+* **BusNetwork**
 
+  * Central controller managing:
 
-Task 2 – (Medium)
+    * All bus stops
+    * All services
+  * Provides lookup and aggregation functionality
 
-It is possible to read in a list of Edinburgh bus stops from the BusStops.CSV file (supplied) using the class CSV Reader (supplied). CSV Reader will turn a CSV file into a 2D string array (see example code in Moodle).
+---
 
-Update your class diagram to show how CSVReader is  incorporated into your design in order to create BusStop objects from the file.  You might want to make use of design patterns at this stage.
+### Supporting Components
 
-Add a button labelled “Load Network” to your window which will create BusStop object for each unique bus stop in the BusStops.CSV file (there should be 2189 bus stops in the file).
+* **ServiceFactory**
 
-Modify your BusNetwork class to have a findStop() method, this should take a busStop ID as a parameter and return a string containing (the stop ID, name and latitude/longitude). Add a button labelled “Find Stop” that takes a stop ID (via a text box) and displays the appropriate stop details in txtOutput (if the stop exists).
+  * Implements the Factory Design Pattern
+  * Responsible for creating `Service` objects
 
-Task 2 – (Advanced)
+* **CSVReader** *(external dependency in project)*
 
-The file EdinburghBusNet.csv contains an entry for each example of a bus service calling at a bus stop. The header and first line of BusNet look like this ….
+  * Reads structured data from CSV files
+  * Used to populate stops and routes
 
-ServiceID
+* **MainWindow (WPF UI)**
 
-Service
+  * Handles user interaction
+  * Connects UI controls to backend logic
 
-Destination
+---
 
-BusStopID
+## Features
 
-Operator
+* Load bus stops from CSV data
+* Load bus routes and associate stops dynamically
+* Search for bus stops by ID
+* View services and their associated stops
+* Interactive GUI using WPF
+* Data-driven system design
+* Factory Pattern implementation for object creation
 
-1Clermiston
+---
 
-1
+## Project Structure
 
-Clermiston
+```bash
+.
+├── BusStop.cs           # Bus stop entity
+├── BusNetwork.cs        # Network manager
+├── Service.cs           # Bus service logic
+├── ServiceFactory.cs    # Factory pattern implementation
+├── Location.cs          # Geographic data model
+├── MainWindow.xaml.cs   # UI logic (WPF)
+├── resources/
+│   ├── BusStops.csv
+│   └── EdinburghBusNet.csv
+└── README.md
+```
 
-183607047
+---
 
-Lothian Buses
+## How It Works
 
-This tells us that the service with the ID “1Clermiston” calls at bus stop ID 183607047, it also tells us that the service is going to “Clermiston” and is operated by Lothian Buses. You can use this data to create a set of Service objects (there should be 103 services) and link them to the appropriate BusStop objects.  
+### 1. Load Bus Stops
 
-Create a drop-down list of service IDs on your window, when a service is selected from the list, the service details and the list of bus stops associated with that service should be printed to the text area.
+* Reads `BusStops.csv`
+* Creates `BusStop` objects
+* Stores them in a dictionary for fast lookup
 
-Marking Scheme
-Highlight on your class diagram where you have made use of design patterns!
-Item
+### 2. Load Routes
 
-Mark
+* Reads `EdinburghBusNet.csv`
+* Groups stops into services
+* Uses `ServiceFactory` to create service objects
 
-Basic Tasks
+### 3. User Interaction
 
- 
+* Search for a stop by ID
+* Select a service from a dropdown
+* View full route details
 
-Test button works correctly
+---
 
-     /5
+## How to Run
 
-Class diagram updated to show tiers
+### Prerequisites
 
-     /2
+* .NET SDK (6.0 or higher)
+* Visual Studio (recommended for WPF)
 
-Medium Tasks
+### Steps
 
- 
+```bash
+dotnet build
+dotnet run
+```
 
-Incorporation of CSVReader into your design
+Or open the solution in Visual Studio and run the project.
 
-     /2
+---
 
-Load Network button works correctly
+## Example Functionality
 
-     /5
+* Load network → Displays total number of stops
+* Load routes → Populates services dynamically
+* Search stop → Returns stop details with coordinates
+* Select service → Displays full route and stops
 
-Find Stop button works correctly
+---
 
-     /5
+## Design Principles
 
-Advanced Tasks
+### Object-Oriented Design
 
- 
+* **Encapsulation**: Data stored in well-defined classes
+* **Abstraction**: Complex logic hidden behind methods
+* **Modularity**: Clear separation between components
 
-Load Network button correctly
+### Design Patterns
 
-     /5
+* **Factory Pattern**
 
-Design Patterns
+  * Used to instantiate `Service` objects
+  * Improves scalability and maintainability
 
- 
+---
 
-Use of design patterns in your design
+## Data Structures Used
 
-(max 2 patterns. 1- poor attempt, 2 – some issues, 3 – pattern used correctly)
+| Structure  | Purpose                               |
+| ---------- | ------------------------------------- |
+| Dictionary | Fast lookup of bus stops by ID        |
+| List       | Ordered storage of services and stops |
 
-     /6
+---
 
- 
+## Limitations
 
- 
+* No persistent storage beyond CSV files
+* Minimal input validation on CSV data
+* UI is functional but not optimized for UX
+* No asynchronous processing for large datasets
 
-Task 3   DISCUSSION
-If you have used design patterns in your design for tasks 1 and 2, explain the advantages their use brought to you.
+---
 
- If you have not used design patterns, suggest a modification to your system which would utilise a design pattern (include a class diagram with your answer).
+## Future Improvements
 
-In both cases justify your choice of pattern.
+* Add database integration (SQL or NoSQL)
+* Implement MVVM architecture for WPF
+* Add filtering and search enhancements
+* Improve UI/UX design
+* Add error handling for malformed CSV data
+* Implement unit and integration testing
 
-Your answer should be no more than 2 A4 sides in length (including diagrams).
+---
 
-You are strongly encouraged to look at the marking scheme (below) which gives further details of the criteria which are being assessed.
+## Author
 
- Marking Scheme -
+Oluwasanmi Longe
+Matriculation Number: 40798397
+GitHub: https://github.com/sanmilonge
 
-Item
+---
 
-Mark
+## License
 
-Discussion of the advantages of design patterns
+This project is intended for academic and educational use only.
 
-      /5
-
-Incorporation of pattern within your design, including justification
-
-      /5
-
- 
-
-Deliverables            
-You should upload the following to Moodle:
-
-1.    A  copy of the submission template, with your work added, please save it as a .PDF named “oosd<matric>.pdf”
-
-DO NOT PLACE THIS PDF IN YOUR .ZIP ARCHIVE, PLEASE UPLOAD IT DIRECTLY TO MOODLE.
-
- 2.    Your Visual Studio Solution for task 2 (as a .ZIP file) – called solution.zip
-
-If there are any issues concerning over use of tools such as ChatGPT or copying of work from other students the markers may ask you to undertake a 1:1 demonstration of your work in order to establish authorship.
-
+---
