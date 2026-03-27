@@ -1,9 +1,9 @@
 # BusNet – Bus Network Management System (OOSD Coursework 2)
 
 ![Language](https://img.shields.io/badge/Language-C%23-blue)
-![Framework](https://img.shields.io/badge/Framework-WPF-.NET-purple)
+![Framework](https://img.shields.io/badge/.NET-6.0%2B-purple)
 ![Architecture](https://img.shields.io/badge/Architecture-OOP-green)
-![Design Pattern](https://img.shields.io/badge/Pattern-Factory-orange)
+![Pattern](https://img.shields.io/badge/Pattern-Factory-orange)
 ![Status](https://img.shields.io/badge/Status-Completed-success)
 ![License](https://img.shields.io/badge/License-Educational-lightgrey)
 
